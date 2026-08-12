@@ -1,0 +1,508 @@
+/* style.css — same Frontend Mentor palette, but mobile-first and responsive.
+   The original had fixed 1200px/750px/730px widths and no media queries. */
+
+:root {
+  --moderate-blue: hsl(238, 40%, 52%);
+  --soft-red: hsl(358, 79%, 66%);
+  --light-grayish-blue: hsl(239, 57%, 85%);
+  --pale-red: hsl(357, 100%, 86%);
+  --dark-blue: hsl(212, 24%, 26%);
+  --grayish-blue: hsl(211, 10%, 45%);
+  --light-gray: hsl(223, 19%, 93%);
+  --very-light-gray: hsl(228, 33%, 97%);
+  --white: hsl(0, 0%, 100%);
+
+  --radius: 10px;
+  --gap: 1rem;
+  --shell: 46rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+  font-family: "Rubik", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--grayish-blue);
+  background: var(--very-light-gray);
+}
+
+body.is-locked {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--moderate-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  background: var(--white);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  color: var(--moderate-blue);
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 20;
+}
+
+/* ------------------------------------------------------------------- shell */
+
+.app {
+  max-width: var(--shell);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.app__bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.app__title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--dark-blue);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ thread */
+
+.thread {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.thread__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* First level of replies is indented. Deeper levels reuse the same indent,
+   which matches the original design while the data still supports any depth. */
+.thread--nested {
+  padding-left: 1rem;
+  border-left: 2px solid var(--light-gray);
+}
+
+@media (min-width: 40rem) {
+  .thread--nested {
+    margin-left: 2.5rem;
+    padding-left: 2.5rem;
+  }
+}
+
+.empty {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+}
+
+/* -------------------------------------------------------------------- card */
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "head head"
+    "body body"
+    "vote actions";
+}
+
+@media (min-width: 40rem) {
+  .card {
+    padding: 1.5rem;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "vote head actions"
+      "vote body body";
+  }
+}
+
+.card--tombstone {
+  grid-template-areas: "body body";
+  color: var(--grayish-blue);
+  font-style: italic;
+}
+
+@media (min-width: 40rem) {
+  .card--tombstone {
+    grid-template-columns: 1fr;
+    grid-template-areas: "body";
+  }
+}
+
+.tombstone {
+  margin: 0;
+}
+
+.card__head {
+  grid-area: head;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.username {
+  font-weight: 500;
+  color: var(--dark-blue);
+}
+
+.badge {
+  background: var(--moderate-blue);
+  color: var(--white);
+  font-size: 0.8125rem;
+  line-height: 1;
+  padding: 0.25rem 0.375rem;
+  border-radius: 3px;
+}
+
+.timestamp,
+.edited {
+  font-size: 0.9375rem;
+}
+
+.edited {
+  font-style: italic;
+}
+
+.card__body {
+  grid-area: body;
+}
+
+.card__body p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.mention {
+  color: var(--moderate-blue);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* -------------------------------------------------------------------- vote */
+
+.vote {
+  grid-area: vote;
+  align-self: start;
+  justify-self: start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--very-light-gray);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+}
+
+@media (min-width: 40rem) {
+  .vote {
+    flex-direction: column;
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+.vote__btn {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 0.375rem;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+}
+
+.vote__btn {
+  color: var(--light-grayish-blue);
+}
+
+.vote__btn svg {
+  display: block;
+  width: 0.6875rem;
+  height: auto;
+}
+
+.vote__btn:hover:not(:disabled) {
+  color: var(--moderate-blue);
+}
+
+.vote__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.vote__btn[aria-pressed="true"] {
+  color: var(--moderate-blue);
+  background: var(--light-gray);
+}
+
+.vote__score {
+  font-weight: 500;
+  color: var(--moderate-blue);
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------------- actions */
+
+.actions {
+  grid-area: actions;
+  justify-self: end;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.act {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  color: var(--moderate-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+}
+
+.act svg {
+  flex: none;
+  width: 0.875rem;
+  height: auto;
+}
+
+.act--danger {
+  color: var(--soft-red);
+}
+
+.act:hover {
+  opacity: 0.5;
+}
+
+/* ---------------------------------------------------------------- composer */
+
+.composer {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "input input"
+    "avatar side";
+}
+
+.composer--inline {
+  padding: 0;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "input"
+    "side";
+}
+
+@media (min-width: 40rem) {
+  .composer {
+    padding: 1.5rem;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "avatar input side";
+    align-items: start;
+  }
+
+  .composer--inline {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "input"
+      "side";
+  }
+}
+
+.composer__avatar {
+  grid-area: avatar;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  align-self: center;
+}
+
+.composer__input {
+  grid-area: input;
+  width: 100%;
+  font: inherit;
+  color: var(--dark-blue);
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--light-gray);
+  border-radius: var(--radius);
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.composer__input:focus {
+  border-color: var(--moderate-blue);
+}
+
+.composer__side {
+  grid-area: side;
+  justify-self: end;
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (min-width: 40rem) {
+  .composer__side {
+    flex-direction: column;
+  }
+  .composer--inline .composer__side {
+    flex-direction: row;
+  }
+}
+
+/* ----------------------------------------------------------------- buttons */
+
+.btn {
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  background: var(--moderate-blue);
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: var(--light-grayish-blue);
+}
+
+.btn--ghost {
+  background: var(--grayish-blue);
+}
+
+.btn--muted {
+  background: var(--grayish-blue);
+}
+
+.btn--danger {
+  background: var(--soft-red);
+}
+
+.btn--danger:hover {
+  background: var(--pale-red);
+}
+
+.btn--quiet {
+  background: none;
+  color: var(--grayish-blue);
+  font-size: 0.875rem;
+  padding: 0.375rem 0.5rem;
+  text-decoration: underline;
+}
+
+.btn--quiet:hover {
+  background: none;
+  color: var(--dark-blue);
+}
+
+/* ------------------------------------------------------------------- modal */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: hsl(0 0% 0% / 0.5);
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal__panel {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  max-width: 25rem;
+  width: 100%;
+}
+
+.modal__panel h2 {
+  margin: 0 0 0.75rem;
+  color: var(--dark-blue);
+  font-size: 1.25rem;
+}
+
+.modal__panel p {
+  margin: 0 0 1.25rem;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.modal__actions .btn {
+  flex: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
